@@ -1,4 +1,3 @@
-import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -17,12 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className={GeistSans.className}>
-      <body className='bg-background text-foreground'>
-        <main className='min-h-screen flex flex-col items-center'>
-          {children}
-        </main>
-      </body>
+    <html lang='en'>
+      <head>
+        <link
+          rel='stylesheet'
+          href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200'
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

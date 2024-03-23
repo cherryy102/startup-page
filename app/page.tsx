@@ -1,27 +1,24 @@
-import AuthButton from '@/components/AuthButton';
+import Tiles from '@/app/ui/Tiles';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
+import { fetchItems } from './lib/data';
 
-export default async function ProtectedPage() {
+export default async function Home() {
   const supabase = createClient();
-
+  const categoriesWithItems = await fetchItems();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  console.log(user);
 
   if (!user) {
-    return redirect('/login');
+    console.log('test');
+    // return redirect('/login');
   }
 
   return (
-    <div className='flex-1 w-full flex flex-col gap-20 items-center'>
-      <div className='w-full'>
-        <nav className='w-full flex justify-center border-b border-b-foreground/10 h-16'>
-          <div className='w-full max-w-4xl flex justify-end items-center p-3 text-sm'>
-            <AuthButton />
-          </div>
-        </nav>
-      </div>
+    <div className='lg:w-8/12 mx-auto p-5 md:w-full'>
+      <Tiles categories={categoriesWithItems} />
     </div>
   );
 }
